@@ -1,11 +1,11 @@
-# 🚗 AutoCare Motors — Multilingual Voice Bot for Auto Dealership Service
+# AutoCare Motors — Multilingual Voice Bot for Auto Dealership Service
 
 > A real-time, Hindi/Hinglish **voice bot** that answers a dealership's service line,
 > books service appointments, checks recalls, handles complaints, escalates angry
 > customers to a human, and logs an **AI-generated summary of every call** to a live
-> CRM dashboard.
+> dummy dashboard.
 >
-> Built for the **Sarvam AI Pre-Sales Engineer** assignment — a real enterprise use
+
 > case powered end-to-end by **Sarvam's STT + LLM + TTS** stack over live telephony.
 
 ---
@@ -95,7 +95,7 @@ flowchart LR
 | **Sarvam client** | [`app/services/sarvam.py`](app/services/sarvam.py) | STT, TTS, and LLM chat-completion calls |
 | **Conversation brain** | [`app/services/conversation.py`](app/services/conversation.py) | Intent detection, entity extraction, session memory, escalation, call summarization |
 | **Telephony** | [`app/services/twilio.py`](app/services/twilio.py) | TwiML generation, outbound calls |
-| **CRM store** | [`app/services/crm.py`](app/services/crm.py) | In-memory customers + call records, phone matching, status updates |
+
 | **Dashboard UI** | [`app/dashboard.py`](app/dashboard.py) | Self-contained HTML dashboard (polls the JSON API) |
 | **Config** | [`app/config.py`](app/config.py) | Env-based settings (Pydantic) |
 
@@ -103,24 +103,20 @@ flowchart LR
 
 ## 🔊 Which Sarvam APIs Are Used — and Why
 
-Sarvam is the **core intelligence** of this bot, not an afterthought. Three Sarvam
-APIs are used on **every call**:
+
 
 | Sarvam API | Model | Where | Why it's used |
 |------------|-------|-------|---------------|
 | **Speech-to-Text** | **Saaras v3** (`saaras:v3`) | [`sarvam.py › speech_to_text()`](app/services/sarvam.py) | Transcribes the caller's Hindi/Hinglish speech. Saaras is built for Indian languages + code-mixing, which generic STT handles poorly. Runs in `unknown`-language mode so it auto-detects. |
 | **LLM / Chat** | **sarvam-105b** | [`sarvam.py › chat_completion()`](app/services/sarvam.py) | Generates the dealership agent's replies **and** the post-call summaries. An India-tuned LLM produces natural Hinglish responses with the right cultural tone ("ji", "aap"). |
-| **Text-to-Speech** | **Bulbul v2** (`bulbul:v2`, voice `anushka`) | [`sarvam.py › text_to_speech()`](app/services/sarvam.py) | Speaks the reply back in a natural Indian voice. Bulbul's Indian-language prosody sounds far more native than generic TTS reading Hindi. |
+| **Text-to-Speech** | **Bulbul v2** (`bulbul:v2`, voice `anushka`) | [`sarvam.py › text_to_speech()`](app/services/sarvam.py) | Speaks the reply back in a natural Indian voice. 
 
 **Multilingual / code-mixing:** the bot handles **Hindi and English, mixed freely
 (Hinglish)** — e.g. *"Kal 11 baje ka time fix karo, I have a meeting at 2."* This is
 exactly the India-specific capability the assignment calls for, and it's driven by
 Sarvam's models end-to-end.
 
-> **Note on telephony STT:** Twilio's built-in speech recognition is used as a fast
-> first pass inside the gather webhook; when a recording is available, **Sarvam
-> Saaras v3** transcribes it for higher-accuracy Indian-language STT. TTS and the LLM
-> are 100% Sarvam.
+
 
 ---
 
@@ -130,11 +126,10 @@ Sarvam's models end-to-end.
 - **Hindi + Hinglish** understanding and speech (2+ languages, code-mixed).
 - **Intent detection** — book service, check recall, get estimate, reschedule,
   cancel, complaint, general query.
-- **Entity extraction** — vehicle model, service type, preferred date.
+-
 - **Escalation to human** — angry/complex calls are detected and handed off.
 - **AI call summaries** — every call is summarized by sarvam-105b.
-- **Live CRM dashboard** — customer records with status badges + a live feed of call
-  summaries, auto-refreshing every 4 seconds.
+-
 
 ---
 
@@ -235,10 +230,7 @@ mujhe abhi manager se baat karni hai!"* — and watch the call end as `ESCALATED
 > from/to **verified numbers**, and Twilio plays a short trial message before the bot
 > answers. Verify your number under Twilio Console → *Verified Caller IDs*.
 
-### Option B — Explore without calling
-- Browse the dashboard and API directly:
-  - Dashboard UI: `/dashboard`
-  - Raw JSON feed: [`/api/dashboard`](https://sarvam-9mo2.onrender.com/api/dashboard)
+
 
 ---
 
@@ -264,31 +256,7 @@ sarvam/
 └── .env.example             # Template for secrets
 ```
 
----
 
-## 🧪 Testing Locally (no phone required)
-
-Simulate a full Hindi/Hinglish conversation, code-mixing, and the escalation flow
-against the real Sarvam APIs:
-
-```bash
-python tests/test_conversation.py
-```
-
-This prints a multi-turn booking conversation, a Hinglish code-mixing test, and an
-angry-customer escalation test — a fast way to verify your `SARVAM_API_KEY` works.
-
----
-
-## ⚠️ Limitations & Next Steps
-
-**Current PoC scope**
-- CRM and call records are **in-memory** (reset on restart) — a production build
-  would use Postgres/CRM integration (Salesforce, Zoho, Leadsquared).
-- STT uses a Twilio-first / Sarvam-recording hybrid; a production build would use
-  **real-time streaming STT** (Sarvam via LiveKit/Pipecat) for lower latency.
-- Appointment "booking" is conversational only — production would write to the
-  dealership DMS and send a WhatsApp/SMS confirmation.
 
 **Toward a 90-day enterprise rollout**
 1. Real-time streaming STT/TTS (LiveKit + Sarvam) for sub-second latency.
