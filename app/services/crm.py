@@ -38,7 +38,7 @@ class CRMStore:
             {
                 "id": "CUST-001",
                 "name": "Rajesh Kumar",
-                "phone": "+91 98765 43210",
+                "phone": "+91 95153 50276",
                 "vehicle_model": "Swift",
                 "vehicle_year": "2022",
                 "last_service_date": "2026-01-15",

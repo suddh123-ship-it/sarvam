@@ -1,7 +1,6 @@
 """Self-contained HTML dashboard for the auto dealership voice bot.
 
-Served at GET /dashboard. It polls GET /api/dashboard for live data and can
-trigger a scripted demo call via POST /api/demo/simulate-call.
+Served at GET /dashboard. It polls GET /api/dashboard for live data.
 """
 
 DASHBOARD_HTML = r"""<!DOCTYPE html>
@@ -93,7 +92,6 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
       <h1>🚗 AutoCare Motors — Voice Bot Dashboard</h1>
       <div class="sub"><span class="dot"></span>Live • telephonic call summaries &amp; customer status</div>
     </div>
-    <button class="btn" id="simBtn" onclick="simulate()">▶ Simulate Call</button>
   </header>
 
   <div class="wrap">
@@ -145,7 +143,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 
   function renderCalls(list) {
     const el = document.getElementById('calls');
-    if (!list.length) { el.innerHTML = '<div class="empty">No calls yet. Click “Simulate Call” to generate one.</div>'; return; }
+    if (!list.length) { el.innerHTML = '<div class="empty">No calls yet. Incoming calls will appear here.</div>'; return; }
     el.innerHTML = list.map(c => {
       const chips = [];
       if (c.vehicle_model) chips.push(`Vehicle: ${c.vehicle_model}`);
@@ -175,16 +173,6 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
       renderCustomers(d.customers);
       renderCalls(d.calls);
     } catch (e) { console.error(e); }
-  }
-
-  async function simulate() {
-    const btn = document.getElementById('simBtn');
-    btn.disabled = true; btn.textContent = '⏳ Calling…';
-    try {
-      await fetch('/api/demo/simulate-call', { method: 'POST', headers: {'Content-Type':'application/json'}, body: '{}' });
-      await refresh();
-    } catch (e) { console.error(e); }
-    btn.disabled = false; btn.textContent = '▶ Simulate Call';
   }
 
   refresh();

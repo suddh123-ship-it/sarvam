@@ -18,7 +18,6 @@ from fastapi.responses import PlainTextResponse, HTMLResponse
 import base64
 import os
 import tempfile
-from datetime import datetime
 from typing import Optional
 
 from app.config import settings
@@ -254,45 +253,6 @@ async def dashboard_data():
         "customers": crm_store.list_customers(),
         "calls": crm_store.list_call_records(),
     }
-
-
-@app.post("/api/demo/simulate-call")
-async def simulate_call(request: Request):
-    """Run a scripted conversation end-to-end to populate the dashboard.
-
-    Lets you demo the dashboard without placing a real phone call. Optional JSON
-    body: {"phone": "+91 98765 43210", "turns": ["...", "..."]}. Defaults to a
-    booking flow for existing customer Rajesh Kumar.
-    """
-    try:
-        body = await request.json()
-    except Exception:
-        body = {}
-
-    phone = body.get("phone", "+91 98765 43210")
-    turns = body.get("turns") or [
-        "Namaste, meri car ki service karwani hai",
-        "Swift hai meri, 2022 model",
-        "Kal subah 10 baje ka slot chahiye, regular service aur oil change",
-        "Theek hai, kal 10 baje aaunga. Dhanyawad!",
-    ]
-
-    call_sid = f"demo-{int(datetime.now().timestamp())}"
-    session = conversation_manager.get_or_create_session(call_sid)
-    session["state"]["phone"] = phone
-
-    escalated = False
-    for text in turns:
-        result = await conversation_manager.process_user_input(call_sid, text)
-        if result["escalation_needed"]:
-            escalated = True
-        if result["should_hangup"]:
-            break
-
-    await _finalize_call(call_sid, escalated=escalated)
-    conversation_manager.end_session(call_sid)
-
-    return {"status": "ok", "call_sid": call_sid, "escalated": escalated}
 
 
 if __name__ == "__main__":
