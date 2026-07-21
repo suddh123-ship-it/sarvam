@@ -1,0 +1,33 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploy: push this repo, then in Render click "New +" → "Blueprint" and point
+# it at this repo. Render reads this file and creates the web service.
+#
+# Secrets (sync: false) are NOT stored in the repo — Render will prompt you to
+# paste them in the dashboard on first deploy. Set these in Render:
+#   SARVAM_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER
+services:
+  - type: web
+    name: sarvam-auto-dealership-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # Render injects $PORT; no --reload in production.
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      # ── Secrets: enter these in the Render dashboard (never committed) ──
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      # ── Non-secret defaults ──
+      - key: DEFAULT_LANGUAGE
+        value: hi-IN
+      - key: DEBUG
+        value: "false"
