@@ -24,6 +24,11 @@
 
 See the **[Demo Runbook](#-demo-runbook)** below for a step-by-step walkthrough.
 
+### 📚 Documentation
+- **[Business write-up](docs/business-writeup.md)** — problem, why AI, why Sarvam, ROI, and a 90-day rollout plan (customer-ready).
+- **[Architecture diagram](docs/architecture.svg)** — full system diagram with all components, APIs, and data flows.
+- **[Deployment guide](DEPLOY_RENDER.md)** — Render deployment steps.
+
 ---
 
 ## 🏢 The Enterprise Problem
@@ -66,6 +71,9 @@ flowchart LR
     Twilio -- speaks reply --> Caller
     Manager([🧑‍💼 Service Manager]) -- views live --> Dash
 ```
+
+> 📐 A standalone, presentation-ready system diagram is at
+> [`docs/architecture.svg`](docs/architecture.svg).
 
 ### Call flow (per turn)
 
