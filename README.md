@@ -12,7 +12,7 @@
 
 ## 🎬 Live Demo (start here)
 
-https://siemensapc-my.sharepoint.com/:v:/r/personal/suddhasheel_bhattacharya_siemens_com/Documents/Recordings/suddhasheel-20260722_103251-Meeting%20Recording.mp4?csf=1&web=1&e=VlnUyJ&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
+
 
 | What | Where |
 |------|-------|
