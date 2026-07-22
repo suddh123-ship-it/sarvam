@@ -12,6 +12,8 @@
 
 ## 🎬 Live Demo (start here)
 
+https://siemensapc-my.sharepoint.com/:v:/r/personal/suddhasheel_bhattacharya_siemens_com/Documents/Recordings/suddhasheel-20260722_103251-Meeting%20Recording.mp4?csf=1&web=1&e=VlnUyJ&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
+
 | What | Where |
 |------|-------|
 | 📞 **Call the bot** | **+1 240 872 0864** (Twilio number — speak in Hindi or Hinglish) |
@@ -139,8 +141,7 @@ Sarvam's models end-to-end.
 - Python **3.11** (see [`.python-version`](.python-version))
 - A [Sarvam AI](https://dashboard.sarvam.ai/) API key
 - A [Twilio](https://console.twilio.com) account + a voice-capable phone number
-- [ngrok](https://ngrok.com) (or any tunnel) to expose localhost to Twilio — **only
-  for local telephony**; the hosted Render URL needs no tunnel.
+
 
 ### Steps
 
